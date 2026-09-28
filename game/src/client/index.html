@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Open Agar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#0a2f38">
+    <link rel="stylesheet" href="css/main.css" />
+    <audio id="split_cell" src="audio/split.mp3"></audio>
+    <audio id="spawn_cell" src="audio/spawn.mp3"></audio>
+</head>
+<body>
+    <div id="gameAreaWrapper">
+        <div id="status"><span class="title">Leaderboard</span></div>
+        <div class="chatbox" id="chatbox">
+            <ul id="chatList" class="chat-list"></ul>
+            <input id="chatInput" type="text" class="chat-input" placeholder="Chat..." maxlength="35" />
+        </div>
+        <div id="mobile">
+           <input type="image" id="split" class="split" src="img/split.png" alt="Dividir">
+           <input type="image" id="feed" class="feed" src="img/feed.png" alt="Soltar massa">
+        </div>
+        <canvas tabindex="1" id="cvs"></canvas>
+    </div>
+
+    <div id="startMenuWrapper">
+        <div class="menu-atmosphere" aria-hidden="true">
+            <span class="float-cell c1"></span>
+            <span class="float-cell c2"></span>
+            <span class="float-cell c3"></span>
+            <span class="float-cell c4"></span>
+        </div>
+
+        <div id="startMenu" class="start-menu-card">
+            <header class="menu-brand">
+                <div class="brand-preview" id="colorPreview" aria-hidden="true"></div>
+                <div class="brand-text">
+                    <h1 class="brand-title">Open Agar</h1>
+                    <p class="brand-tagline">Coma. Cresça. Sobreviva.</p>
+                </div>
+            </header>
+
+            <div class="online-pill" id="onlinePill" title="Jogadores conectados agora">
+                <span class="online-dot" aria-hidden="true"></span>
+                <span id="onlineCount">conectando…</span>
+            </div>
+
+            <label class="field-label" for="playerNameInput">Seu nome no jogo</label>
+            <input
+                type="text"
+                tabindex="0"
+                autofocus
+                placeholder="Como você quer ser chamado?"
+                id="playerNameInput"
+                maxlength="25"
+                autocomplete="nickname"
+                enterkeyhint="go"
+                aria-describedby="menuError"
+            />
+            <b class="input-error" id="nickFormatError">Use só letras, números e _ (sem espaços).</b>
+            <div class="menu-error" id="menuError" role="alert" aria-live="polite" hidden></div>
+
+            <div class="color-section">
+                <span class="field-label">Cor da sua célula</span>
+                <div class="color-swatches" id="colorSwatches" role="listbox" aria-label="Escolher cor"></div>
+            </div>
+
+            <div class="mass-section">
+                <label class="field-label" for="startMassInput">Massa inicial</label>
+                <div class="mass-presets" id="massPresets" role="listbox" aria-label="Massa inicial"></div>
+                <div class="mass-custom">
+                    <input
+                        type="number"
+                        id="startMassInput"
+                        min="10"
+                        max="5000"
+                        step="10"
+                        value="10"
+                        inputmode="numeric"
+                    />
+                    <span class="mass-hint">10 – 5000</span>
+                </div>
+            </div>
+
+            <button type="button" id="startButton" class="btn btn-play">Jogar</button>
+
+            <div class="btn-row">
+                <button type="button" id="spectateButton" class="btn btn-ghost">Assistir</button>
+                <button type="button" id="settingsButton" class="btn btn-ghost">Opções</button>
+            </div>
+
+            <details class="controls-help">
+                <summary>Como jogar</summary>
+                <ul>
+                    <li><strong>Mover:</strong> arraste o dedo ou mova o mouse</li>
+                    <li><strong>Soltar massa:</strong> tecla <kbd>W</kbd> ou botão Feed no celular</li>
+                    <li><strong>Dividir:</strong> <kbd>Espaço</kbd> ou botão Split no celular</li>
+                    <li><strong>Reunir células:</strong> <kbd>Backspace</kbd> (fusão imediata)</li>
+                    <li>Coma comida e células menores. Fuja das maiores.</li>
+                </ul>
+            </details>
+
+            <div id="settings">
+                <h3>Opções</h3>
+                <ul class="settings-list">
+                    <label><input id="visBord" type="checkbox"> Mostrar borda do mapa</label>
+                    <label><input id="showMass" type="checkbox"> Mostrar massa</label>
+                    <label><input id="continuity" type="checkbox"> Continuar movendo fora da tela</label>
+                    <label><input id="roundFood" type="checkbox" checked> Comida arredondada</label>
+                    <label><input id="darkMode" type="checkbox"> Modo escuro no mapa</label>
+                </ul>
+            </div>
+
+            <div id="botsPanelMenu">
+                <h3>Bots alimentadores</h3>
+                <p class="bots-hint">Digite seu nome acima, escolha quantos bots e clique em Chamar. Eles vêm até você e soltam massa.</p>
+                <label for="botsCountInput">Quantidade de bots</label>
+                <input type="number" id="botsCountInput" min="1" max="20" value="4" />
+                <div class="bots-actions">
+                    <button type="button" id="botsStartButton">Chamar bots</button>
+                    <button type="button" id="botsStopButton">Parar bots</button>
+                </div>
+                <div id="botsStatusMenu" class="bots-status">Painel offline — rode: cd bots && npm start</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="botsHud">
+        <div class="bots-hud-title">Bots</div>
+        <div id="botsStatusHud" class="bots-status">—</div>
+        <div class="bots-actions">
+            <button type="button" id="botsStartHud">Chamar</button>
+            <button type="button" id="botsStopHud">Parar</button>
+        </div>
+    </div>
+
+    <script src="js/jquery-2.2.0.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/bots-panel.js"></script>
+</body>
+</html>

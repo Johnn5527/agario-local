@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Painel — Feeder Bots</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>Feeder Bots</h1>
+      <p class="sub">Controle em tempo real · mesmo estado do terminal</p>
+    </div>
+    <div id="conn" class="pill off">WS…</div>
+  </header>
+
+  <section class="hero-stats">
+    <div class="stat">
+      <div class="stat-label">Massa entregue ≈</div>
+      <div class="stat-value" id="massDelivered">0</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Bots / modo</div>
+      <div class="stat-value" id="botsMode">—</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Alvo</div>
+      <div class="stat-value" id="targetName">—</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Status</div>
+      <div class="stat-value" id="swarmState">—</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Enxame</h2>
+    <div class="row">
+      <button data-cmd="pause">Pausar / Retomar</button>
+      <button data-cmd="add">+ Bot</button>
+      <button data-cmd="remove">− Bot</button>
+      <button class="danger" data-cmd="stop">Parar tudo</button>
+      <button class="ok" data-cmd="start">Start</button>
+    </div>
+    <div class="row form">
+      <label>Alvo <input id="inpTarget" placeholder="Johnny" /></label>
+      <button data-cmd="target">Aplicar alvo</button>
+      <label>Modo
+        <select id="inpMode">
+          <option value="hybrid">hybrid</option>
+          <option value="trickle">trickle</option>
+          <option value="sacrifice">sacrifice</option>
+        </select>
+      </label>
+      <button data-cmd="mode">Aplicar modo</button>
+      <label>Qtd <input id="inpCount" type="number" min="0" max="20" value="4" /></label>
+      <button data-cmd="count">Set count</button>
+    </div>
+    <div class="row form">
+      <label>Approach <input id="inpApproach" type="number" /></label>
+      <label>Feed <input id="inpFeed" type="number" /></label>
+      <label>Safe <input id="inpSafe" type="number" /></label>
+      <label>Sacr. margem <input id="inpMargin" type="number" step="0.1" /></label>
+      <label>Sacr. min mass <input id="inpMinMass" type="number" /></label>
+      <button data-cmd="config">Aplicar distâncias</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Massa do alvo (ao vivo)</h2>
+    <canvas id="chart" width="800" height="160"></canvas>
+  </section>
+
+  <section class="card">
+    <h2>Bots</h2>
+    <div id="bots" class="bots-grid"></div>
+  </section>
+
+  <section class="card">
+    <h2>Eventos</h2>
+    <pre id="events" class="events"></pre>
+  </section>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+# Dependências e builds
+node_modules/
+game/bin/
+npm-debug.log*
+*.log
+
+# Dados gerados localmente
+*.sqlite3
+game/lan-qr.png
+
+# Histórico git original do clone upstream (preservado, fora deste repositório)
+game/.git-upstream/
+
+# Cópia do download original dos bots (o código vive em bots/)
+_extracted/
+agario-feeder-bots.zip
+
+# Editor / SO
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store
