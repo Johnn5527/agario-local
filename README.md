@@ -293,7 +293,8 @@ node test/fake_player.js JohnnyTeste --hunt-food --force-drop-at=80
 
 ## Licença
 
-Este projeto é distribuído sob a **Licença MIT** — veja [`LICENSE`](LICENSE).
+Este projeto é distribuído sob a **Licença MIT** — veja [`LICENSE`](LICENSE) (texto oficial em inglês)
+e a tradução em português em [`LICENCA.md`](LICENCA.md).
 Direitos autorais (c) 2026 Johnny lucas.
 
 ### Componentes de terceiros
